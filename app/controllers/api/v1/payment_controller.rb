@@ -1,19 +1,9 @@
 require 'stripe'
 
 class Api::V1::PaymentController < ApplicationController
-
   def create
-    Stripe::PaymentIntent.create({
-      amount: params[:amount],
-      currency: "USD",
-      description: "Your Company Description",
-      payment_method: params[:id],
-      confirm: true,
-    });
+    Payment::IntentService.call(params[:amount], params[:payment_id])
 
-    render json: {message: 'Payment Successful'}, status: :ok
-
-  rescue Stripe => e
-    render json: { message: e }, status: :not_acceptable
+    render json: { message: 'Payment Successful' }, status: :ok
   end
 end
