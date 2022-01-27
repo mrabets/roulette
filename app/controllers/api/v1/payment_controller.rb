@@ -11,6 +11,8 @@ module Api
         ).call
 
         render json: { message: 'Payment Successful' }, status: :ok
+      rescue Stripe::InvalidRequestError => e
+        raise CustomError.new(400), e.message
       end
 
       def balance
