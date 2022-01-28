@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+gem 'rubocop-rails', require: false
 gem 'stripe'
 gem 'rack-cors'
 gem 'devise'

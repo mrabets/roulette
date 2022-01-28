@@ -9,11 +9,6 @@ module Api
           params[:payment_id]
         ).call
 
-        Payment::BalanceService.new(
-          params[:user_id],
-          params[:amount]
-        ).update
-
         render json: { message: 'Payment Successful' }, status: :ok
       end
 
