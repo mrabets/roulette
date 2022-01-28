@@ -5,14 +5,26 @@ module Api
     class PaymentController < ApplicationController
       def create
         Payment::IntentService.new(
-          params[:user_id],
           params[:amount],
           params[:payment_id]
         ).call
 
+        Payment::BalanceService.new(
+          params[:user_id],
+          params[:amount]
+        ).update
+
         render json: { message: 'Payment Successful' }, status: :ok
-      rescue Stripe::InvalidRequestError => e
-        raise CustomError.new(400), e.message
+      end
+
+      def update
+        Payment::BalanceService.new(
+          params[:user_id],
+          params[:amount],
+          params[:spending]
+        ).update
+
+        render json: { message: 'Balance Updated' }, status: :ok
       end
 
       def balance
