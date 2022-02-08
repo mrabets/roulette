@@ -1,7 +1,16 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+group :development, :test do
+  gem 'rspec-rails'
+end
+group :test do
+    gem 'factory_bot_rails'
+    gem 'faker'
+end
+
 gem 'rubocop-rails', require: false
+
 gem 'stripe'
 gem 'rack-cors'
 gem 'devise'
