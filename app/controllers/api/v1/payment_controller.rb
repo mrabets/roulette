@@ -5,6 +5,7 @@ module Api
     class PaymentController < ApplicationController
       def create
         Payment::IntentService.new(
+          params[:user_id],
           params[:amount],
           params[:payment_id]
         ).call

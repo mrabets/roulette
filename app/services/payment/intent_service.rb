@@ -14,10 +14,9 @@ module Payment
                                       payment_method: payment_id,
                                       confirm: true
                                     })
-
         Payment::BalanceService.new(
-          params[:user_id],
-          params[:amount]
+          user_id,
+          amount
         ).update
       end
     rescue Stripe::InvalidRequestError => e
