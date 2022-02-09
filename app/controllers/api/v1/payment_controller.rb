@@ -10,11 +10,8 @@ module Api
       end
 
       def update
-        Payment::BalanceService.new(
-          params[:user_id],
-          params[:amount],
-          params[:spending]
-        ).update
+        byebug
+        Payment::BalanceService.new(balance_params).update
 
         render json: { message: 'Balance Updated' }, status: :ok
       end
@@ -23,6 +20,10 @@ module Api
 
       def payment_params
         params.require(:payment).permit(:user_id, :amount, :payment_id)
+      end
+
+      def balance_params
+        params.require(:payment).permit(:user_id, :amount, :spending)
       end
     end
   end

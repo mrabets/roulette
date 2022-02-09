@@ -1,9 +1,9 @@
 module Payment
   class BalanceService
-    def initialize(user_id, amount, spending = false)
-      @user_id = user_id
-      @amount = amount.to_f
-      @spending = spending
+    def initialize(attributes)
+      @user_id = attributes.fetch(:user_id)
+      @amount = attributes.fetch(:amount).to_f
+      @spending = attributes.fetch(:spending)
     end
 
     def update

@@ -3,15 +3,19 @@ module Api
     class RouletteController < ApplicationController
       def create
         roulette = RouletteService.new(roulette_params(:bet_amount, :bet_color))
-
-        Payment::BalanceService.new(params[:user_id], roulette.final_result, roulette.lose?).update
+        
+        Payment::BalanceService.new({
+          user_id: params[:user_id],
+          amount: roulette.final_result,
+          spending: roulette.lose?
+        }).update
 
         render json: {
           prize_index: roulette.prize[:index],
           prize_score: roulette.prize[:score],
           color: roulette.prize[:color]
         },
-               status: :ok
+        status: :ok
       end
 
       private
