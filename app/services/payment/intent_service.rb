@@ -9,15 +9,12 @@ module Payment
     def call
       ActiveRecord::Base.transaction do
         Stripe::PaymentIntent.create({
-                                      amount: amount * 100,
-                                      currency: 'USD',
-                                      payment_method: payment_id,
-                                      confirm: true
-                                    })
-        Payment::BalanceService.new(
-          user_id,
-          amount
-        ).update
+                                       amount: amount * 100,
+                                       currency: 'USD',
+                                       payment_method: payment_id,
+                                       confirm: true
+                                     })
+        Payment::BalanceService.new(user_id, amount).update
       end
     rescue Stripe::InvalidRequestError => e
       raise CustomError.new(400), e.message
