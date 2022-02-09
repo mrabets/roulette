@@ -22,11 +22,6 @@ module Api
 
         render json: { message: 'Balance Updated' }, status: :ok
       end
-
-      def balance
-        balance = User.find(params[:id]).balance
-        render json: { balance: balance }, status: :ok
-      end
     end
   end
 end
