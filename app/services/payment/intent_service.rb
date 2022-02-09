@@ -1,9 +1,9 @@
 module Payment
   class IntentService
-    def initialize(user_id, amount, payment_id)
-      @user_id = user_id
-      @amount = amount
-      @payment_id = payment_id
+    def initialize(attributes)
+      @user_id = attributes.fetch(:user_id)
+      @amount = attributes.fetch(:amount)
+      @payment_id = attributes.fetch(:payment_id)
     end
 
     def call

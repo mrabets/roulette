@@ -4,11 +4,7 @@ module Api
   module V1
     class PaymentController < ApplicationController
       def create
-        Payment::IntentService.new(
-          params[:user_id],
-          params[:amount],
-          params[:payment_id]
-        ).call
+        Payment::IntentService.new(payment_params).call
 
         render json: { message: 'Payment Successful' }, status: :ok
       end
@@ -21,6 +17,12 @@ module Api
         ).update
 
         render json: { message: 'Balance Updated' }, status: :ok
+      end
+
+      private
+
+      def payment_params
+        params.require(:payment).permit(:user_id, :amount, :payment_id)
       end
     end
   end
