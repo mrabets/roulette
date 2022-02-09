@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       post 'payment/create'
       put 'payment/update'
       get 'users/:id/balance', to: 'balance#index'
+      post 'roulette', to: 'roulette#create'
     end
   end
 end
