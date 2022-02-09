@@ -2,20 +2,20 @@ module Payment
   class BalanceService
     def initialize(user_id, amount, spending = false)
       @user_id = user_id
-      @amount = amount
+      @amount = amount.to_f
       @spending = spending
     end
 
     def update
       return unless user
 
-      if @spending
-        user.balance -= amount.to_f
-      else
-        user.balance += amount.to_f
+      user.with_lock do
+        if @spending
+          user.update(balance: user.balance - amount)
+        else
+          user.update(balance: user.balance + amount)
+        end
       end
-
-      user.save
     end
 
     private
