@@ -1,17 +1,17 @@
-class Users::RegistrationsController < Devise::RegistrationsController
-  respond_to :json
+module Users
+  class RegistrationsController < Devise::RegistrationsController
+    respond_to :json
 
-  private
+    private
 
-  def respond_with(resource, _opts = {})
-    resource.persisted? ? register_success : register_failed
-  end
+    def respond_with(_resource, _opts = {})
+      Users::CheckerService.call(@user)
 
-  def register_success
-    render json: { message: 'Signed up.' }
-  end
-  
-  def register_failed
-    render json: { message: "Signed up failure." }
+      render json: { user: current_user, token: current_token }, status: :ok
+    end
+
+    def current_token
+      request.env['warden-jwt_auth.token']
+    end
   end
 end
